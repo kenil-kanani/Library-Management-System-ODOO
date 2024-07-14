@@ -12,6 +12,8 @@ export const AUTH_ERRORS = {
     INVALID_CREDENTIALS: 'Invalid credentials',
     USER_NOT_VERIFIED: 'User not verified. Please verify your email',
     INVALID_TOKEN: 'Invalid token or token expired or missing',
+    VERIFICATION_EMAIL_SENT: 'User verification email sent to your email. Please verify your email to login',
+    VERIFICATION_EMAIL_SENT_RECENTLY: 'User verification email sent recently. Please verify your email.'
 };
 export const LIBRARY_ERRORS = {
     LIBRARY_ALREADY_EXISTS: 'Library already exists',
