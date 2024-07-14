@@ -1,54 +1,81 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import SearchBar from "@/components/SearchBar";
+import { useState, useEffect } from 'react';
+import SearchBar from '@/components/SearchBar';
+import { BookCard } from '@/components';
+import { getAllBooks } from '@/api';
 
-const Books = () => {
-    const [books, setBooks] = useState([
-        {
-            id: "8743893748917",
-            title: "Book Title 1",
-            author: "Author Name 1",
-            description: "Lorem ipsum dolor sit amet...",
-            image: "https://example.com/book1.jpg",
-        },
-        // Add more book objects as needed
-    ]);
+export default function Books() {
+    const [books, setBooks] = useState([]);
+    const [filteredBooks, setFilteredBooks] = useState([]);
+    const [trendingBooks, setTrendingBooks] = useState([]);
+    const [searchTitle, setSearchTitle] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
-    const BookCard = ({ book }) => (
-        <Card key={book.id}>
-            <img
-                src={book.image}
-                alt={book.title}
-                className="rounded-t-lg object-cover w-full h-56"
-            />
-            <CardContent className="p-4">
-                <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
-                <p className="text-muted-foreground mb-4">{book.author}</p>
-                <Link to={`/books/${book.id}`}>
-                    <Button className="w-full">View Details</Button>
-                </Link>
-            </CardContent>
-        </Card>
-    );
+    useEffect(() => {
+        getAllBooks().then((data) => {
+            setBooks(data);
+            setFilteredBooks(data);
+            setTrendingBooks(data);
+            setIsLoading(false);
+        });
+    }, []);
+
+    const handleSearch = (searchParams) => {
+        setSearchTitle(searchParams.title || '');
+    };
+
+    useEffect(() => {
+        if (searchTitle.trim() === '') {
+            setFilteredBooks(books);
+        } else {
+            const result = books.filter(book =>
+                book.title.toLowerCase().includes(searchTitle.toLowerCase())
+            );
+            setFilteredBooks(result);
+        }
+    }, [books, searchTitle]);
+
+    if (isLoading) {
+        return <BooksSkeleton />;
+    }
 
     return (
-        <div className="flex flex-col min-h-screen bg-background">
-            <SearchBar />
-            <main className="flex-1 container mx-auto py-8 px-6 md:px-8">
-                <section className="mb-8">
-                    <h2 className="text-2xl font-bold mb-4">Books</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {books.map((book) => (
-                            <BookCard key={book.id} book={book} />
-                        ))}
-                    </div>
-                </section>
-            </main>
-            {/* Footer remains unchanged */}
+        <div className="flex flex-col md:flex-row gap-4 p-4">
+            <div className="flex-grow overflow-y-auto">
+                <SearchBar onSearch={handleSearch} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                    {filteredBooks.map(book => (
+                        <BookCard key={book._id} book={book} />
+                    ))}
+                </div>
+            </div>
+            <div className="w-1/4 min-w-[250px] p-4 overflow-y-auto">
+                <h2 className="text-lg font-semibold mb-4 mx-auto w-fit">Trending Books</h2>
+                {trendingBooks.slice(0, 4).map(book => (
+                    <BookCard key={book._id} book={book} />
+                ))}
+            </div>
         </div>
     );
-};
+}
 
-export default Books;
+
+function BooksSkeleton() {
+    return (
+        <div className="flex flex-col md:flex-row gap-4 p-4 animate-pulse">
+            <div className="flex-grow overflow-y-auto">
+                <div className="h-10 bg-gray-200 rounded mb-4"></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                    {[...Array(6)].map((_, index) => (
+                        <div key={index} className="bg-gray-200 h-64 rounded"></div>
+                    ))}
+                </div>
+            </div>
+            <div className="w-1/4 min-w-[250px] p-4 overflow-y-auto">
+                <div className="h-6 bg-gray-200 w-32 mx-auto mb-4 rounded"></div>
+                {[...Array(4)].map((_, index) => (
+                    <div key={index} className="bg-gray-200 h-32 mb-4 rounded"></div>
+                ))}
+            </div>
+        </div>
+    );
+}

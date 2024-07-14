@@ -16,5 +16,6 @@ export {
     SignUp,
     SignIn,
     BookDetails,
-    AddLibrary
+    AddLibrary,
+    UpdateLibrary
 }

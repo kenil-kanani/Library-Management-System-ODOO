@@ -20,13 +20,13 @@ import { useCustomForm } from "@/hooks";
 import librarySchema from "@/schema/librarySchema";
 import { useState } from "react";
 import updateLibrary from "@/api/updateLibrary";
-import { useParam,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function UpdateLibrary() {
-    const { id } = useParam();
-    const navigate = useNavigate();
-    const toast = useToast();
+	const { id } = useParams();
+	const navigate = useNavigate();
+	const toast = useToast();
 	const form = useCustomForm(librarySchema, {
 		libName: "",
 		address: "",
@@ -40,7 +40,7 @@ export default function UpdateLibrary() {
 		setIsLoading(true);
 
 		const res = await updateLibrary(
-            id,
+			id,
 			values.libName,
 			values.address,
 			values.name,
@@ -69,7 +69,7 @@ export default function UpdateLibrary() {
 			<Card className="w-full max-w-xl">
 				<CardHeader>
 					<CardTitle>Update Library</CardTitle>
-					<CardDescription >
+					<CardDescription>
 						Enter the details for the library.
 					</CardDescription>
 				</CardHeader>
@@ -82,7 +82,6 @@ export default function UpdateLibrary() {
 							<FormField
 								control={form.control}
 								name="libName"
-                                
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel className="text-gray-700">
@@ -90,7 +89,6 @@ export default function UpdateLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                                
 												placeholder="library name..."
 												{...field}
 											/>
@@ -109,7 +107,6 @@ export default function UpdateLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            
 												placeholder="name..."
 												{...field}
 											/>
@@ -118,46 +115,7 @@ export default function UpdateLibrary() {
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={form.control}
-								name="email"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-gray-700">
-											Email
-										</FormLabel>
-										<FormControl>
-											<Input
-                                            
-												type="email"
-												placeholder="Email..."
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="password"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-gray-700">
-											Password
-										</FormLabel>
-										<FormControl>
-											<Input
-                                            
-												type="password"
-												placeholder="Password..."
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+
 							<FormField
 								control={form.control}
 								name="address"
@@ -168,7 +126,7 @@ export default function UpdateLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            required
+												required
 												placeholder="address..."
 												{...field}
 											/>

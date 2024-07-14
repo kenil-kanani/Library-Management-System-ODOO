@@ -21,9 +21,11 @@ import librarySchema from "@/schema/librarySchema";
 import { useState } from "react";
 import lib from "@/api/lib";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function AddLibrary() {
     const toast = useToast();
+    const navigate = useNavigate();
 	const form = useCustomForm(librarySchema, {
 		libName: "",
 		address: "",
@@ -64,7 +66,7 @@ export default function AddLibrary() {
 		<div className="flex items-center justify-center min-h-[90vh]">
 			<Card className="w-full max-w-xl">
 				<CardHeader>
-					<CardTitle>Update Library</CardTitle>
+					<CardTitle>Add new Library</CardTitle>
 					<CardDescription>
 						Enter the details for the library.
 					</CardDescription>

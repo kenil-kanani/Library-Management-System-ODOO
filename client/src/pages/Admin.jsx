@@ -79,22 +79,22 @@ const Admin = () => {
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 						{libraries.map((library) => (
 							<Card key={library.id}>
-								<CardContent className="p-4">
-									<div className="flex items-center justify-between">
-										<h3 className="text-lg font-semibold">
-											{library.libraryName}
-										</h3>
-										<Link to={`/updateLib/${library.id}`}>
-											<Button size="sm">Update</Button>
-										</Link>
-									</div>
-									<p className="text-muted-foreground mt-2">
-										{library.address}
-									</p>
-									<p className="text-muted-foreground mt-2">
-										Librarian ID: {library.librarian}
-									</p>
-								</CardContent>
+								<CardContent className="p-2">
+								<div className="flex items-center justify-between">
+									<h3 className="text-sm font-semibold">
+										{library.libraryName}
+									</h3>
+									<Link to={`/updateLib/${library.librarian}`} className="bg-black rounded-lg text-white p-1">
+										Update
+									</Link>
+								</div>
+									<span className="text-2xl font-bold">
+										
+									</span>
+								<p className="text-muted-foreground mt-2">
+								Address : {library.address}
+								</p>
+							</CardContent>
 							</Card>
 						))}
 					</div>
