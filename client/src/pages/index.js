@@ -5,8 +5,9 @@ import Librarian from "./Librarian"
 import SignUp from "./SignUp"
 import SignIn from "./SignIn"
 import BookDetails from "./BookDetails"
-
+import UserDashboard from "./UserDashboard"
 import AddLibrary from "./AddLibrary"
+
 export {
     Home,
     Admin,
@@ -15,5 +16,6 @@ export {
     SignUp,
     SignIn,
     BookDetails,
-    AddLibrary
+    AddLibrary,
+    UserDashboard
 }

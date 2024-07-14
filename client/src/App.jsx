@@ -5,7 +5,7 @@ import AppContext from './context/AppContext'
 import { Toaster } from './components/ui/toaster'
 import { FirstLoading, NavBar } from './components'
 import { Route, Routes } from 'react-router-dom'
-import { AddLibrary, Admin, BookDetails, Books, Librarian, SignIn, SignUp } from './pages'
+import { AddLibrary, Admin, BookDetails, Books, Librarian, SignIn, SignUp, UserDashboard } from './pages'
 
 function App() {
   const { isLoading } = useContext(AppContext)
@@ -25,6 +25,7 @@ function App() {
           <Route path="/books/:id" element={<BookDetails />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/add-library" element={<AddLibrary />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
         </Routes>
       </>
     )

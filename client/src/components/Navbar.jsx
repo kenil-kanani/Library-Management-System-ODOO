@@ -39,6 +39,10 @@ const NavBar = () => {
             label: 'Books',
             path: '/books',
         },
+        {
+            label: 'User Dashboard',
+            path: '/user-dashboard',
+        },
     ]
 
     const withAuthNavItemsForAdmin = [
