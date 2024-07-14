@@ -1,6 +1,7 @@
 import express from 'express';
 import { BASE_URL, CLIENT_URL, PORT } from './src/config/serverConfig.js';
 import connectDB from './src/config/dbConfig.js';
+import router from './src/routes/index.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -21,6 +22,8 @@ async function startServer() {
     app.use(cookieParser());
 
     app.use(cors(corsOptions));
+
+    app.use('/api', router);
 
     app.listen(PORT, () => {
         console.log(`Server is running on port ${BASE_URL}`);
