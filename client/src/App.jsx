@@ -26,6 +26,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/add-library" element={<AddLibrary />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="manage-library/:id" element={<UpdateLibrary />} />
         </Routes>
       </>
     )

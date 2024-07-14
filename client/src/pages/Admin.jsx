@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Card,
 	CardContent,
@@ -7,40 +7,44 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { getAllLibrary } from "@/api";
+import { useToast } from "@/components/ui/use-toast"
+
 
 const Admin = () => {
-	const libraries = [
-		{
-			id: 1,
-			libraryName: "Central Library",
-			address: "123 Main St, Cityville",
-			librarian: 1,
-		},
-		{
-			id: 2,
-			libraryName: "Westside Branch",
-			address: "456 Elm St, Townsville",
-			librarian: 2,
-		},
-		{
-			id: 3,
-			libraryName: "Eastside Branch",
-			address: "789 Oak St, Villagetown",
-			librarian: 3,
-		},
-		{
-			id: 4,
-			libraryName: "Northside Branch",
-			address: "101 Maple St, Hamletville",
-			librarian: 4,
-		},
-		{
-			id: 5,
-			libraryName: "Southside Branch",
-			address: "202 Pine St, Suburbia",
-			librarian: 5,
-		},
-	];
+	const toast = useToast();
+	const [libraries, setLibraries] = useState([]);
+
+	const fetchData = async () => {
+		try {
+			const result = await getAllLibrary();
+
+			if (result && result.data) {
+				setLibraries(result.data);
+				toast({
+					title: "Data fetched successfully",
+					duration: 3000,
+				});
+			} else {
+				toast({
+					title:
+						result?.message ||
+						"Something went wrong while fetching the data",
+					duration: 2000,
+				});
+			}
+		} catch (error) {
+			toast({
+				title: "Error fetching data",
+				description: error.message,
+				duration: 2000,
+			});
+		}
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	return (
 		<div className="flex flex-col min-h-screen bg-background">
@@ -55,7 +59,7 @@ const Admin = () => {
 										Total Libraries
 									</h3>
 									<span className="text-2xl font-bold">
-										24
+										{libraries.length}
 									</span>
 								</div>
 								<p className="text-muted-foreground mt-2">
@@ -68,36 +72,36 @@ const Admin = () => {
 				</section>
 				<section className="mb-8">
 					<h2 className="text-2xl font-bold mb-4">
-						Manage Libraries
+						<Link to={`/manage-library/${libraries.id}`}>
+							Manage Libraries
+						</Link>
 					</h2>
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 						{libraries.map((library) => (
 							<Card key={library.id}>
-								<CardContent className="p-4">
-									<div className="flex items-center justify-between">
-										<h3 className="text-lg font-semibold">
-											{library.libraryName}
-										</h3>
-										<Button size="sm">update</Button>
-									</div>
-									<p className="text-muted-foreground mt-2">
-										{library.address}
-									</p>
-									<p className="text-muted-foreground mt-2">
-										{library.librarian}
-									</p>
-								</CardContent>
+								<CardContent className="p-2">
+								<div className="flex items-center justify-between">
+									<h3 className="text-sm font-semibold">
+										{library.libraryName}
+									</h3>
+									<Link to={`/updateLib/${library.librarian}`} className="bg-black rounded-lg text-white p-1">
+										Update
+									</Link>
+								</div>
+									<span className="text-2xl font-bold">
+										
+									</span>
+								<p className="text-muted-foreground mt-2">
+								Address : {library.address}
+								</p>
+							</CardContent>
 							</Card>
 						))}
 					</div>
 					<div className="mt-6 text-left">
-						<Link to={"/add-library"} >
-                            <Button
-                                
-                            >
-                                Add new library
-                            </Button>
-                        </Link>
+						<Link to="/add-library">
+							<Button>Add new library</Button>
+						</Link>
 					</div>
 				</section>
 			</main>

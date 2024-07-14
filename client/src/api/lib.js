@@ -19,4 +19,4 @@ const lib = async (libName,address,name,email,password) => {
     }
 }
 
-export default signUp;
+export default lib;

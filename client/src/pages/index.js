@@ -7,6 +7,7 @@ import SignIn from "./SignIn"
 import BookDetails from "./BookDetails"
 import UserDashboard from "./UserDashboard"
 import AddLibrary from "./AddLibrary"
+import UpdateLibrary from "./UpdateLibrary"
 
 export {
     Home,
@@ -17,5 +18,6 @@ export {
     SignIn,
     BookDetails,
     AddLibrary,
-    UserDashboard
+    UserDashboard,
+    UpdateLibrary
 }

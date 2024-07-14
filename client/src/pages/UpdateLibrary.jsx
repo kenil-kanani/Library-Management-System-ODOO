@@ -19,13 +19,14 @@ import {
 import { useCustomForm } from "@/hooks";
 import librarySchema from "@/schema/librarySchema";
 import { useState } from "react";
-import lib from "@/api/lib";
+import updateLibrary from "@/api/updateLibrary";
+import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
-export default function AddLibrary() {
-    const toast = useToast();
-    const navigate = useNavigate();
+export default function UpdateLibrary() {
+	const { id } = useParams();
+	const navigate = useNavigate();
+	const toast = useToast();
 	const form = useCustomForm(librarySchema, {
 		libName: "",
 		address: "",
@@ -38,14 +39,15 @@ export default function AddLibrary() {
 	async function onSubmit(values) {
 		setIsLoading(true);
 
-		const res = await lib(
+		const res = await updateLibrary(
+			id,
 			values.libName,
 			values.address,
 			values.name,
 			values.email,
 			values.password,
 		);
-		if (res && res.data) {
+		if (res && res) {
 			toast({
 				title: "Library updated successfully",
 				duration: 3000,
@@ -66,7 +68,7 @@ export default function AddLibrary() {
 		<div className="flex items-center justify-center min-h-[90vh]">
 			<Card className="w-full max-w-xl">
 				<CardHeader>
-					<CardTitle>Add new Library</CardTitle>
+					<CardTitle>Update Library</CardTitle>
 					<CardDescription>
 						Enter the details for the library.
 					</CardDescription>
@@ -80,7 +82,6 @@ export default function AddLibrary() {
 							<FormField
 								control={form.control}
 								name="libName"
-                                
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel className="text-gray-700">
@@ -88,7 +89,6 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                                required
 												placeholder="library name..."
 												{...field}
 											/>
@@ -107,7 +107,6 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            required
 												placeholder="name..."
 												{...field}
 											/>
@@ -116,46 +115,7 @@ export default function AddLibrary() {
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={form.control}
-								name="email"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-gray-700">
-											Email
-										</FormLabel>
-										<FormControl>
-											<Input
-                                            required
-												type="email"
-												placeholder="Email..."
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="password"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="text-gray-700">
-											Password
-										</FormLabel>
-										<FormControl>
-											<Input
-                                            required
-												type="password"
-												placeholder="Password..."
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+
 							<FormField
 								control={form.control}
 								name="address"
@@ -166,7 +126,7 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            required
+												required
 												placeholder="address..."
 												{...field}
 											/>
@@ -179,7 +139,7 @@ export default function AddLibrary() {
 								disabled={isLoading}
 								className="w-full bg-[#bd1e59] text-white"
 							>
-								{isLoading ? "Loading..." : "Add library"}
+								{isLoading ? "Loading..." : "update library"}
 							</Button>
 						</form>
 					</Form>
