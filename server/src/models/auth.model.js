@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 import { isEmail, isPassword } from '../utils/index.js';
 
 const authSchema = new mongoose.Schema({
@@ -29,6 +30,30 @@ const authSchema = new mongoose.Schema({
         timestamps: true,
     }
 )
+
+authSchema.statics.isEmailAlreadyRegistered = async function (email) {
+    try {
+        const auth = await this.findOne({ email });
+        return auth;
+    } catch {
+        return null;
+    }
+}
+
+authSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
+
+authSchema.methods.comparePassword = async function (password) {
+    try {
+        return await bcrypt.compare(password, this.password);
+    } catch {
+        return false;
+    }
+}
 
 const Auth = mongoose.model('Auth', authSchema);
 
