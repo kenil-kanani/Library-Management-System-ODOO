@@ -1,3 +1,5 @@
+export const APP_NAME = "Lib Space";
+
 export const USER_ROLES = ['user', 'admin', 'librarian'];
 
 export const AUTH_ERRORS = {

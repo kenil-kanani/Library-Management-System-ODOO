@@ -43,11 +43,22 @@ async function logout(_, res) {
     handleResponse(res, StatusCodes.OK, null, 'User logged out successfully');
 }
 
+async function verifyEmail(req, res) {
+    try {
+        const { token } = req.params;
+        await authService.verifyEmail(token);
+        handleResponse(res, StatusCodes.OK, null, 'Email verified successfully');
+    } catch (error) {
+        handleError(error, res);
+    }
+}
+
 const authController = {
     signUp,
     signIn,
     me,
-    logout
+    logout,
+    verifyEmail
 }
 
 export default authController;
