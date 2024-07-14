@@ -21,12 +21,12 @@ import librarySchema from "@/schema/librarySchema";
 import { useState } from "react";
 import updateLibrary from "@/api/updateLibrary";
 import { useParams, useNavigate } from "react-router-dom";
-
+import useToast from "@/components/ui/toast"
 
 export default function UpdateLibrary() {
 	const { id } = useParams();
 	const navigate = useNavigate();
-	
+	const toast = useToast();
 	const form = useCustomForm(librarySchema, {
 		libName: "",
 		address: "",
