@@ -1,7 +1,9 @@
 import { BOOK_ERRORS } from '../constants.js';
 import { Book } from '../models/book.model.js';
 import axios from 'axios';
-import { handleInternalServerError } from '../utils/index.js';
+import { ApiError, handleInternalServerError } from '../utils/index.js';
+import { StatusCodes } from 'http-status-codes';
+import mongoose from 'mongoose';
 
 const fetchBooksFromAPI = async (query = 'all', maxResults = 10) => {
     try {
@@ -49,17 +51,132 @@ const getAllBooks = async () => {
 // get book by Id
 const getBookById = async (id) => {
     try {
-        return await Book.findById(id);
+        const book = await Book.findById(id);
+        if (!book) {
+            throw new ApiError(
+                StatusCodes.NOT_FOUND,
+                BOOK_ERRORS.BOOK_NOT_FOUND
+            );
+        }
+        return book;
     } catch (error) {
         handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
     }
 };
 
+// add book
+const addBook = async (book) => {
+    try {
+        const book = await Book.create(book);
+        return book;
+    } catch (error) {
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
+    }
+};
+
+// update book
+const updateBook = async (
+    id,
+    title,
+    author,
+    publisher,
+    year,
+    genre,
+    quantity,
+    pageCount,
+    language,
+    available_quantity
+) => {
+    try {
+        const book = await Book.findById(id);
+
+        if (!book) {
+            throw new ApiError(
+                StatusCodes.NOT_FOUND,
+                BOOK_ERRORS.BOOK_NOT_FOUND
+            );
+        }
+        book.title = title ?? book.title;
+        book.author = author ?? book.author;
+        book.publisher = publisher ?? book.publisher;
+        book.language = language ?? book.language;
+        book.year = year ?? book.year;
+        book.genre = genre ?? book.genre;
+        book.quantity = quantity ?? book.quantity;
+        book.pageCount = pageCount ?? book.pageCount;
+        book.available_quantity = available_quantity ?? book.available_quantity;
+    } catch (error) {
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
+    }
+};
+
+const searchBooks = async (query) => {
+    try {
+        // const {
+        //     search = '',
+        //     sortBy = 'year',
+        //     searchBy = 'title',
+        //     order = -1,
+        //     libId,
+        // } = query;
+
+        // console.log({ search, sortBy, searchBy, order, libId });
+
+        // let matchStage = {};
+
+        // if(searchBy === 'title') {
+
+        // }
+
+        // const pipeline = [
+        //     matchStage,
+        //     {
+        //         $sort: {
+        //             [sortBy]: order,
+        //         },
+        //     },
+        //     {
+        //         $lookup: {
+        //             from: 'libraries',
+        //             localField: 'libId',
+        //             foreignField: '_id',
+        //             as: 'libraryInfo',
+        //             pipeline: [
+        //                 {
+        //                     $lookup: {
+        //                         from: 'users',
+        //                         localField: 'librarian',
+        //                         foreignField: '_id',
+        //                         as: 'librarian',
+        //                     },
+        //                 },
+        //             ],
+        //         },
+        //     },
+        //     {
+        //         $unwind: '$libraryInfo',
+        //     },
+        //     {
+        //         $unwind: '$libraryInfo.librarian',
+        //     },
+        // ];
+
+        // console.log({ pipeline });
+
+        // const result = await Book.aggregate(pipeline);
+
+        // return result;
+    } catch (error) {
+        console.log('BOOK REPO: ' + error);
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
+    }
+};
+
 export default {
-    fetchBooksFromAPI,
-    saveBooksToDatabase,
     getAllBooks,
+    updateBook,
     getBookById,
+    searchBooks,
 };
 
 // saveBooksToDatabase();

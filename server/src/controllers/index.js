@@ -2,5 +2,11 @@ import authController from './auth.controller.js';
 import userController from './user.controller.js';
 import libraryController from './library.controller.js';
 import bookController from './book.controller.js';
-
-export { authController, userController, libraryController, bookController };
+import borrowController from './borrow.controller.js';
+export {
+    borrowController,
+    authController,
+    userController,
+    libraryController,
+    bookController,
+};
