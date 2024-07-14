@@ -76,7 +76,7 @@ const NavBar = () => {
     }, [user])
 
     return (
-        <header className="px-4 lg:px-6 h-16 flex items-center bg-gray-200">
+        <header className="px-4 lg:px-6 h-16 flex items-center bg-gray-200 sticky top-0">
             <Link to="/" className="flex items-center justify-center">
                 <span className="ml-2 text-xl font-bold text-gray-900 ">{APP_NAME}</span>
             </Link>
