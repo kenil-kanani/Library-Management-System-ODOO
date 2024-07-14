@@ -26,6 +26,7 @@ function App() {
           <Route path="/books/:id" element={<BookDetails />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/add-library" element={<AddLibrary />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="manage-library/:id" element={<UpdateLibrary />} />
           <Route path="librarianDashboard" element={<LibrarianDashboard />} />
         </Routes>

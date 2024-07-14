@@ -32,4 +32,36 @@ const getBookById = async (req, res) => {
     }
 };
 
-export default { getAllBooks, getBookById };
+// searchBook
+const searchBooks = async (req, res) => {
+    try {
+        validateFields(req, { query: ['query'] });
+        const {
+            search = '',
+            sortBy = 'year',
+            searchBy = ['title'],
+            order = -1,
+            libId,
+        } = req.query;
+
+        const query = {
+            search,
+            sortBy,
+            searchBy,
+            order,
+            libId,
+        };
+
+        const books = await bookService.searchBooks(query);
+        handleResponse(
+            res,
+            StatusCodes.OK,
+            books,
+            'Books retrieved successfully'
+        );
+    } catch (error) {
+        handleError(error, res);
+    }
+};
+
+export default { getAllBooks, getBookById, searchBooks };

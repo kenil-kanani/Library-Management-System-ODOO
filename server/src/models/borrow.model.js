@@ -9,6 +9,8 @@ const borrowSchema = new Schema(
         dueDate: { type: Date, required: true },
         returnedAt: { type: Date },
         lateFee: { type: Number, default: 0 },
+        isPaid: { type: Boolean, default: false },
+        isIssued: { type: Boolean, default: false },
     },
     { timestamps: true }
 );
