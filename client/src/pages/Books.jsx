@@ -34,7 +34,7 @@ const Books = () => {
     );
 
     return (
-        <div className="flex flex-col min-h-screen bg-background">
+        <div className="flex flex-col min-h-screen bg-background mt-6">
             <SearchBar />
             <main className="flex-1 container mx-auto py-8 px-6 md:px-8">
                 <section className="mb-8">
