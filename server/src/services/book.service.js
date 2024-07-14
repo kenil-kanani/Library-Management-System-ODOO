@@ -17,5 +17,14 @@ const getBookById = async (bookId) => {
     }
 };
 
-const bookService = { getAllBooks, getBookById };
+// searchBook
+const searchBooks = async (query) => {
+    try {
+        return await bookRepository.searchBooks(query);
+    } catch (error) {
+        handleInternalServerError(error, BOOK_ERRORS.SERVICE_LAYER);
+    }
+};
+
+const bookService = { getAllBooks, getBookById, searchBooks };
 export default bookService;
