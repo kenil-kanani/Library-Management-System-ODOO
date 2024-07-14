@@ -7,6 +7,8 @@ import { FirstLoading, NavBar } from './components'
 import { Route, Routes } from 'react-router-dom'
 import { Admin, Books, Librarian,AddLibrary,UpdateLibrary } from './pages'
 import LibrarianDashboard from './components/LibrarianDashboard'
+import AboutUs from './components/AboutUs'
+import ContactUs from './components/ContactUs'
 
 function App() {
   const { isLoading } = useContext(AppContext)
@@ -29,6 +31,9 @@ function App() {
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="manage-library/:id" element={<UpdateLibrary />} />
           <Route path="librarianDashboard" element={<LibrarianDashboard />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="contactus" element={<ContactUs />} />
+
         </Routes>
       </>
     )
