@@ -2,7 +2,6 @@ import mongoose, { Schema } from 'mongoose';
 
 const borrowSchema = new Schema(
     {
-        id: { type: String, required: true, unique: true },
         userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         bookId: { type: Schema.Types.ObjectId, ref: 'Book', required: true },
         libId: { type: Schema.Types.ObjectId, ref: 'Library', required: true },

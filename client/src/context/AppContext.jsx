@@ -42,7 +42,7 @@ const AppProvider = ({ children }) => {
                 title: "Successfully logged in...",
                 duration: 2000,
             })
-            navigate("/user-dashboard")
+            navigate("/books")
         } else {
             setUser(null);
             setRole(null);

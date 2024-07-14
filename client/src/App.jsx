@@ -20,6 +20,9 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/librarian" element={<Librarian />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/books/:id" element={<BookDetails />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/add-library" element={<AddLibrary />} />
           <Route path="manage-library/:id" element={<UpdateLibrary />} />
