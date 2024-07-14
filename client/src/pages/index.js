@@ -6,6 +6,7 @@ import SignUp from "./SignUp"
 import SignIn from "./SignIn"
 import BookDetails from "./BookDetails"
 
+import AddLibrary from "./AddLibrary"
 export {
     Home,
     Admin,
@@ -13,5 +14,6 @@ export {
     Librarian,
     SignUp,
     SignIn,
-    BookDetails
+    BookDetails,
+    AddLibrary
 }
