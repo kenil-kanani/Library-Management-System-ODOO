@@ -5,7 +5,7 @@ import AppContext from './context/AppContext'
 import { Toaster } from './components/ui/toaster'
 import { FirstLoading, NavBar } from './components'
 import { Route, Routes } from 'react-router-dom'
-import { Admin, Books, Librarian,AddLibrary } from './pages'
+import { Admin, Books, Librarian,AddLibrary,UpdateLibrary } from './pages'
 
 function App() {
   const { isLoading } = useContext(AppContext)
@@ -22,7 +22,7 @@ function App() {
           <Route path="/librarian" element={<Librarian />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/add-library" element={<AddLibrary />} />
-
+          <Route path="manage-library/:id" element={<UpdateLibrary />} />
         </Routes>
       </>
     )

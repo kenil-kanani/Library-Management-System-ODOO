@@ -19,10 +19,13 @@ import {
 import { useCustomForm } from "@/hooks";
 import librarySchema from "@/schema/librarySchema";
 import { useState } from "react";
-import lib from "@/api/lib";
+import updateLibrary from "@/api/updateLibrary";
+import { useParam,useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
-export default function AddLibrary() {
+export default function UpdateLibrary() {
+    const { id } = useParam();
+    const navigate = useNavigate();
     const toast = useToast();
 	const form = useCustomForm(librarySchema, {
 		libName: "",
@@ -36,14 +39,15 @@ export default function AddLibrary() {
 	async function onSubmit(values) {
 		setIsLoading(true);
 
-		const res = await lib(
+		const res = await updateLibrary(
+            id,
 			values.libName,
 			values.address,
 			values.name,
 			values.email,
 			values.password,
 		);
-		if (res && res.data) {
+		if (res && res) {
 			toast({
 				title: "Library updated successfully",
 				duration: 3000,
@@ -65,7 +69,7 @@ export default function AddLibrary() {
 			<Card className="w-full max-w-xl">
 				<CardHeader>
 					<CardTitle>Update Library</CardTitle>
-					<CardDescription>
+					<CardDescription >
 						Enter the details for the library.
 					</CardDescription>
 				</CardHeader>
@@ -86,7 +90,7 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                                required
+                                                
 												placeholder="library name..."
 												{...field}
 											/>
@@ -105,7 +109,7 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            required
+                                            
 												placeholder="name..."
 												{...field}
 											/>
@@ -124,7 +128,7 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            required
+                                            
 												type="email"
 												placeholder="Email..."
 												{...field}
@@ -144,7 +148,7 @@ export default function AddLibrary() {
 										</FormLabel>
 										<FormControl>
 											<Input
-                                            required
+                                            
 												type="password"
 												placeholder="Password..."
 												{...field}
@@ -177,7 +181,7 @@ export default function AddLibrary() {
 								disabled={isLoading}
 								className="w-full bg-[#bd1e59] text-white"
 							>
-								{isLoading ? "Loading..." : "Add library"}
+								{isLoading ? "Loading..." : "update library"}
 							</Button>
 						</form>
 					</Form>
