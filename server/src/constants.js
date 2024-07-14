@@ -29,3 +29,10 @@ export const BOOK_ERRORS = {
     CONTROLLER_LAYER: 'Something went wrong in the book controller',
     BOOK_NOT_FOUND: 'Book not found',
 };
+export const BORROW_ERRORS = {
+    BORROW_ALREADY_EXISTS: 'BORROW already exists',
+    REPOSITORY_LAYER: 'Something went wrong in the Borrow repository',
+    SERVICE_LAYER: 'Something went wrong in the Borrow service',
+    CONTROLLER_LAYER: 'Something went wrong in the Borrow controller',
+    BORROW_NOT_FOUND: 'BORROW not found',
+};

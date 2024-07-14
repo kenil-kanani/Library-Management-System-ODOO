@@ -1,15 +1,14 @@
-import connectDB from "../config/dbConfig.js";
-import { Book } from "../models/book.model.js";
+import { BOOK_ERRORS } from '../constants.js';
+import { Book } from '../models/book.model.js';
 import axios from 'axios';
+import { handleInternalServerError } from '../utils/index.js';
 
-export const getAllBooks = async () => {
-    return await Book.find();
-};
-
-export const fetchBooksFromAPI = async (query = 'all', maxResults = 10) => {
+const fetchBooksFromAPI = async (query = 'all', maxResults = 10) => {
     try {
-        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${maxResults}`);
-        const books = response.data.items.map(item => ({
+        const response = await axios.get(
+            `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${maxResults}`
+        );
+        const books = response.data.items.map((item) => ({
             library: '669377738ce7f9ee42f57479',
             ISBN: item.volumeInfo.industryIdentifiers?.[0]?.identifier || 'N/A',
             title: item.volumeInfo.title,
@@ -24,24 +23,43 @@ export const fetchBooksFromAPI = async (query = 'all', maxResults = 10) => {
         }));
         return books;
     } catch (error) {
-        console.error('Error fetching books from API:', error);
-        return [];
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
     }
 };
 
-export const saveBooksToDatabase = async () => {
+const saveBooksToDatabase = async () => {
     try {
-        await connectDB();
         const books = await fetchBooksFromAPI();
         for (const book of books) {
             await Book.create(book);
         }
-        console.log('Books saved to database:');
     } catch (error) {
-        console.error('Error saving books to database:', error);
-        return [];
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
     }
 };
 
+const getAllBooks = async () => {
+    try {
+        return await Book.find();
+    } catch (error) {
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
+    }
+};
 
-saveBooksToDatabase();
+// get book by Id
+const getBookById = async (id) => {
+    try {
+        return await Book.findById(id);
+    } catch (error) {
+        handleInternalServerError(error, BOOK_ERRORS.REPOSITORY_LAYER);
+    }
+};
+
+export default {
+    fetchBooksFromAPI,
+    saveBooksToDatabase,
+    getAllBooks,
+    getBookById,
+};
+
+// saveBooksToDatabase();
