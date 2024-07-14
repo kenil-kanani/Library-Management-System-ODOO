@@ -1,4 +1,4 @@
-import { APP_NAME, ROLE } from "../../constant.js"
+import { APP_NAME, ROLE } from "../constant.js"
 import AppContext from '@/context/AppContext'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -29,7 +29,6 @@ const NavBar = () => {
         },
     ]
 
-
     const [navItems, setNavItems] = useState(withoutAuthNavItems)
 
     return (
@@ -47,7 +46,7 @@ const NavBar = () => {
                         {item.label}
                     </Link>
                 ))}
-                
+
             </nav>
         </header>
     )

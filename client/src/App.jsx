@@ -1,16 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useContext } from 'react'
 import './App.css'
 import Home from './pages/Home'
+import AppContext from './context/AppContext'
+import { Toaster } from './components/ui/toaster'
+import { FirstLoading, NavBar } from './components'
+import { Route, Routes } from 'react-router-dom'
+import { Admin, Books, Librarian } from './pages'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { isLoading } = useContext(AppContext)
 
   return (
-    <>
-      <Home/>
-    </>
+    isLoading ? <FirstLoading /> : (
+      <>
+        <Toaster />
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/librarian" element={<Librarian />} />
+        </Routes>
+      </>
+    )
   )
 }
 

@@ -16,9 +16,11 @@ const withRoleProtection = (Component, allowedRoles) => {
             if (!user || !role) {
                 navigate('/sign-in');
             } else if (!isAuthorized && role === ROLE.USER) {
-                navigate('/user-dashboard');
+                navigate('/books');
             } else if (!isAuthorized && role === ROLE.ADMIN) {
-                navigate('/admin-dashboard');
+                navigate('/admin');
+            } else if (!isAuthorized && role === ROLE.LIBRARIAN) {
+                navigate('/librarian');
             }
         }, [user, role, isAuthorized, navigate]);
 
