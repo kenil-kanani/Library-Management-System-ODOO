@@ -1,6 +1,6 @@
-import { BORROW_ERRORS } from '../constants';
+import { BORROW_ERRORS } from '../constants.js';
 import BorrowRepository from '../repositories/borrow.repository.js';
-import { handleInternalServerError } from '../utils';
+import { handleInternalServerError } from '../utils/index.js';
 
 async function addBorrow(
     userId,
